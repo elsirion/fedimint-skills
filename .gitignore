@@ -1,0 +1,3 @@
+# local validation artifacts
+/scratch/
+*.log
