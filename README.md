@@ -19,8 +19,12 @@ All skills are **CLI-first** (the web UIs at `:8175`/`:8176` are noted as a seco
 ## Design & validation
 
 See [`docs/superpowers/specs/2026-07-21-fedimint-skills-design.md`](docs/superpowers/specs/2026-07-21-fedimint-skills-design.md)
-for the design and the validation methodology. Each skill is validated by fresh subagents that receive
+for the design and the validation methodology. Each skill was validated by fresh subagents that received
 *only* that skill plus a concrete task, working in clean Ubuntu, Debian, and NixOS containers against a
-real regtest [devimint](https://github.com/fedimint/fedimint/tree/master/devimint) substrate. A macOS
-testing strategy is documented in [`references/testing-on-macos.md`](references/testing-on-macos.md)
-(deferred).
+real regtest [devimint](https://github.com/fedimint/fedimint/tree/master/devimint) substrate — all nine
+runs (3 skills × 3 distros) passed.
+
+- [`docs/validation-notes.md`](docs/validation-notes.md) — what each validation transcript surfaced and
+  the documentation fixes it drove.
+- [`references/testing-on-macos.md`](references/testing-on-macos.md) — macOS testing strategy (deferred;
+  no macOS host was available).
