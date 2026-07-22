@@ -50,6 +50,25 @@ documentation fixes that removed them — the answer to "what could docs have pr
 | Nix install was a trailing comment using `#{a,b}` brace expansion (breaks in `sh`/`dash`) | Promote to a fenced block with each target on its own line |
 | Metrics defaults to `LISTEN_ADDR` port + 1 (= default iroh port) | State the default rule; recommend setting `FM_GATEWAY_METRICS_LISTEN_ADDR` |
 
+## macOS run (fedimint-cli-wallet, Apple M2 / macOS 26.2)
+
+A wallet pass was later run on a native Apple-Silicon Mac (the audience most likely to run
+`fedimint-cli`). Confirmed:
+
+- **Install works with no Nix/Homebrew/admin:** the `fedimint-pkgs-*-aarch64-apple-darwin.tar.gz`
+  tarball downloads, extracts, and runs; a `curl` download carries no Gatekeeper quarantine, so
+  `version-hash` runs as-is (correct hash). → added a **macOS install section** to the skill.
+- **Real federation ops run natively:** `join` (both over iroh across the internet and over a TCP
+  reverse tunnel), `info`, and `deposit-address` all worked (network stack, RocksDB migrations, crypto,
+  JSON output exercised). The binary is the same Rust code validated on Linux, so the remaining ops
+  follow.
+- **BSD/macOS deltas fixed in the skill:** `grep -P` and `timeout` don't exist on stock macOS — the
+  skill's `grep -oP` notes-extraction fallback was replaced with a GNU/BSD-portable `sed`, and a
+  macOS-userland caveat was added.
+- **Not a skill issue, but noted:** a federation's **iroh** address isn't always reachable from a
+  remote client (NAT), so a Mac wallet joining a remote federation may see iroh connection retries; a
+  TCP endpoint (or a well-connected iroh federation) is deterministic.
+
 ## Harness efficiency notes (for future validation runs)
 
 - The `nixos/nix` image is very minimal — no `bash`/coreutils/`jq` on the default PATH, and the nix

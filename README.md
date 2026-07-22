@@ -26,5 +26,6 @@ runs (3 skills × 3 distros) passed.
 
 - [`docs/validation-notes.md`](docs/validation-notes.md) — what each validation transcript surfaced and
   the documentation fixes it drove.
-- [`references/testing-on-macos.md`](references/testing-on-macos.md) — macOS testing strategy (deferred;
-  no macOS host was available).
+- [`references/testing-on-macos.md`](references/testing-on-macos.md) — macOS testing strategy. The
+  wallet skill has since been validated on a native Apple-Silicon Mac (macOS 26.2); federation/gateway
+  operator skills remain deferred (they target servers, not Macs).

@@ -41,6 +41,18 @@ fedimint-cli version-hash                                  # sanity check -> pri
 > gives no hint; check the file size or use `curl -fL` so a failed download errors instead of half-writing.
 (Fedora/RHEL: the same page has `fedimint-cli-0.11.1-1.x86_64.rpm` — `dnf install ./…rpm`.)
 
+**macOS (Apple Silicon):** use the prebuilt darwin tarball — no Homebrew/Nix/admin needed, and a
+`curl` download isn't Gatekeeper-quarantined so it runs as-is:
+```bash
+curl -fL -O https://github.com/fedimint/fedimint/releases/download/v0.11.1/fedimint-pkgs-v0.11.1-aarch64-apple-darwin.tar.gz
+tar xzf fedimint-pkgs-v0.11.1-aarch64-apple-darwin.tar.gz     # -> bin/fedimint-cli (+ bin/fedimintd)
+./bin/fedimint-cli version-hash
+# If you fetched it via a browser instead of curl, clear the quarantine flag first:
+#   xattr -d com.apple.quarantine ./bin/fedimint-cli
+```
+Note the macOS/BSD userland lacks GNU niceties: `grep -P` and the `timeout` command aren't available
+(install `coreutils` via Homebrew for `gtimeout`, or use `jq` for JSON extraction below).
+
 **NixOS / any system with Nix:**
 ```bash
 # --accept-flake-config lets Nix use Fedimint's binary cache (fedimint.cachix.org) instead of
@@ -123,7 +135,7 @@ fedimint-cli spend 100000
 # NOTE: `spend` returns JSON `{"notes": "BgAAAA…"}` — pass just the inner base64
 # string to reissue, not the whole JSON object. Extract it with, e.g.:
 #   NOTES=$(fedimint-cli spend 100000 | jq -r .notes)   # then: fedimint-cli reissue "$NOTES"
-#   (no jq? grep -oP '"notes":\s*"\K[^"]+' works too)
+#   (no jq? portable across GNU/BSD: sed -n 's/.*"notes": *"\([^"]*\)".*/\1/p')
 fedimint-cli reissue BgAAAA…
 # -> the reissued amount, e.g. 100000
 
