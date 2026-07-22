@@ -27,7 +27,9 @@ on-chain are just ways to get value into or out of that ecash balance, brokered 
 ### 1. Install `fedimint-cli`
 
 Pick the method that matches the platform. **On Debian/Ubuntu use the `.deb`** — it is by far the
-cleanest path.
+cleanest path. None of these paths require the **Nix package manager** — the `.deb`/`.rpm`/darwin
+binaries simply *bundle* their libraries under `/nix/store` and run without any `nix` command, daemon,
+or `/nix` setup. (Verified on Ubuntu 24.04, Debian 12, and Arch with no Nix installed.)
 
 **Debian / Ubuntu (`.deb`):**
 ```bash
@@ -63,10 +65,20 @@ nix profile install --accept-flake-config github:fedimint/fedimint/v0.11.1#fedim
 Requires Nix with flakes enabled (`experimental-features = nix-command flakes`). On NixOS do **not**
 use the raw release binary below — an unpatched dynamically-linked binary won't run; use Nix.
 
-**Other Linux (no package manager):** the release page also has a bare
-`fedimint-cli-v0.11.1` asset, but it is a **self-extracting archive**, not a plain ELF — it needs
-`hexdump`, `tar`, and `xz` present to unpack on first run (`apt-get install -y bsdmainutils xz-utils`
-on Debian/Ubuntu). Prefer the `.deb`/Nix/docker methods.
+**Arch / other Linux (no `apt`/`dnf`):** two nix-free options —
+- The bare `fedimint-cli-v0.11.1` asset is a **self-extracting** `nix bundle` (needs `hexdump`, `tar`,
+  `xz`; `pacman -S util-linux xz` if missing). It unpacks via `nix-user-chroot`, so it requires
+  **unprivileged user namespaces** enabled — on by default on stock Arch/desktop kernels, but blocked
+  in some hardened/container environments (you'll see a "namespace" hint if so; enable it or use the
+  next option).
+- **Robust (no user namespaces, no dpkg):** extract the `.deb` payload directly — the binary and its
+  bundled libs live under `/nix/store`, and running them needs no Nix package manager:
+  ```bash
+  curl -fL -O https://github.com/fedimint/fedimint/releases/download/v0.11.1/fedimint-cli_0.11.1_amd64.deb
+  ar x fedimint-cli_0.11.1_amd64.deb && sudo tar -C / -xf data.tar.*     # populates /usr + /nix/store
+  sudo ln -sf /nix/store/*-fedimint-cli/bin/fedimint-cli /usr/local/bin/fedimint-cli
+  fedimint-cli version-hash
+  ```
 
 **Docker:** the CLI ships in the `fedimintd` image:
 ```bash

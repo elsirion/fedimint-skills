@@ -69,6 +69,20 @@ A wallet pass was later run on a native Apple-Silicon Mac (the audience most lik
   remote client (NAT), so a Mac wallet joining a remote federation may see iroh connection retries; a
   TCP endpoint (or a well-connected iroh federation) is deterministic.
 
+## No-Nix Linux confirmation (fedimint-cli, Ubuntu / Debian / Arch)
+
+Verified the wallet binary runs with **no Nix package manager** (no `nix` command, daemon, or `/nix`
+setup) on fresh containers:
+
+- **Ubuntu 24.04 / Debian 12** — `.deb` install; `version-hash` correct, offline `dev decode
+  invite-code` parses. The binary links `libc`/`ld-linux` from `/nix/store/…-glibc` paths that the
+  `.deb` *bundles* — self-contained, but not the Nix package manager.
+- **Arch** (no `apt`/`dnf`) — two nix-free paths: the self-extracting `fedimint-cli-v0.11.1` bundle
+  works but needs unprivileged user namespaces (blocked by the container's seccomp; fine on a stock
+  Arch desktop). The robust path is extracting the `.deb` payload (`ar x` + `tar -C /`) and running the
+  binary from `/nix/store/*-fedimint-cli/bin/` — worked with no userns and no dpkg. Both folded into
+  the skill's install section.
+
 ## Harness efficiency notes (for future validation runs)
 
 - The `nixos/nix` image is very minimal — no `bash`/coreutils/`jq` on the default PATH, and the nix
