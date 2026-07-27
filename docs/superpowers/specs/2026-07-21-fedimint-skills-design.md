@@ -9,7 +9,7 @@
 Ship three agent-facing skills (same `SKILL.md` format as the existing `gateway-liquidity`
 skill in fedimint) that let an agent help a real end user:
 
-1. `fedimint-cli-wallet` — use `fedimint-cli` as a Lightning, on-chain, and ecash wallet.
+1. `fedimint-bitcoin-wallet` — use `fedimint-cli` as a Lightning, on-chain, and ecash wallet.
 2. `fedimint-federation-setup` — set up a federation with `fedimintd` and operate it (incl. meta fields).
 3. `fedimint-gateway-operation` — run and operate a Lightning gateway (`gatewayd`/`gateway-cli`).
 
@@ -86,7 +86,7 @@ so the substrate runs in its own container network, not host ports.
 
 ## Skill contents (CLI-first)
 
-- **fedimint-cli-wallet:** install (release binary; docker/nix noted) · `join` · `info` ·
+- **fedimint-bitcoin-wallet:** install (release binary; docker/nix noted) · `join` · `info` ·
   ecash `spend`/`validate`/`reissue`/`decode` · Lightning `ln-invoice`/`await-invoice`/`ln-pay` +
   gateway selection (`list-gateways`/`switch-gateway`) · on-chain `deposit-address`/`await-deposit`/
   `withdraw` · `backup`/`restore`/`print-secret` · reading meta (`dev meta-fields`) · common errors.
@@ -128,7 +128,7 @@ No macOS host in this environment. Recorded in `references/testing-on-macos.md`:
 - [x] Environment confirmed: docker + sudo + nix available.
 - [x] Pin v0.11.1; background nix build of devimint/fedimint-pkgs/gateway-pkgs started.
 - [ ] Spike: headless `dev-fed`/`external-daemons` reachable from a container.
-- [ ] Skill 1 `fedimint-cli-wallet` → validate (ubuntu/debian/nixos) → commit.
+- [ ] Skill 1 `fedimint-bitcoin-wallet` → validate (ubuntu/debian/nixos) → commit.
 - [ ] Skill 2 `fedimint-federation-setup` → validate → commit.
 - [ ] Skill 3 `fedimint-gateway-operation` → validate → commit.
 - [ ] macOS strategy doc (deferred execution).

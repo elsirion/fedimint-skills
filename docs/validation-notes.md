@@ -7,7 +7,7 @@ surfaced was fed back into the skill (the RED→GREEN→REFACTOR loop of skill-w
 (3 skills × 3 distros) ended **PASS**. This doc records the transcript-derived inefficiencies and the
 documentation fixes that removed them — the answer to "what could docs have prevented?".
 
-## fedimint-cli-wallet
+## fedimint-bitcoin-wallet
 
 | Friction observed in a transcript | Fix folded into the skill |
 |---|---|
@@ -50,7 +50,7 @@ documentation fixes that removed them — the answer to "what could docs have pr
 | Nix install was a trailing comment using `#{a,b}` brace expansion (breaks in `sh`/`dash`) | Promote to a fenced block with each target on its own line |
 | Metrics defaults to `LISTEN_ADDR` port + 1 (= default iroh port) | State the default rule; recommend setting `FM_GATEWAY_METRICS_LISTEN_ADDR` |
 
-## macOS run (fedimint-cli-wallet, Apple M2 / macOS 26.2)
+## macOS run (fedimint-bitcoin-wallet, Apple M2 / macOS 26.2)
 
 A wallet pass was later run on a native Apple-Silicon Mac (the audience most likely to run
 `fedimint-cli`). Confirmed:

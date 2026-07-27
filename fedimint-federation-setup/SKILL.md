@@ -1,22 +1,31 @@
 ---
 name: fedimint-federation-setup
 description: >-
-  Use when setting up, running, or operating a Fedimint federation with
-  `fedimintd` — installing/launching guardian(s), running the setup/DKG
-  ceremony, obtaining the federation invite code, setting or changing meta
-  fields (federation name, welcome message, etc.), and day-to-day guardian
-  operations (status, audit, config backup, coordinated shutdown/upgrade).
-  Triggers on: "fedimintd", "set up a federation", "guardian", "DKG", "setup
-  ceremony", "set-local-params", "start-dkg", "invite code", "meta fields",
-  "federation_name", "welcome_message", "meta module", "guardian dashboard",
-  "FM_PASSWORD", "solo federation", "run a federation".
+  Use when setting up and running a Fedimint federation with `fedimintd` — to
+  offer your community a private, scalable way to hold and transact in Bitcoin
+  under shared (community) custody, rather than trusting a single custodian.
+  Covers installing/launching guardian(s), running the setup/DKG ceremony,
+  obtaining the invite code your members use to join, setting meta fields
+  (federation name, welcome message, etc.), and day-to-day guardian operations
+  (status, audit, config backup, coordinated shutdown/upgrade). Triggers on:
+  "fedimintd", "set up a federation", "run a federation", "community custody",
+  "guardian", "DKG", "setup ceremony", "set-local-params", "start-dkg", "invite
+  code", "meta fields", "federation_name", "welcome_message", "meta module",
+  "guardian dashboard", "FM_PASSWORD", "solo federation".
 ---
 
 # Setting up & operating a Fedimint federation
 
-A federation is run by one or more **guardian** servers, each running `fedimintd`. Fedimint is
-Byzantine-Fault-Tolerant: a federation of `3m + 1` guardians tolerates `m` malicious ones (4 guardians
-→ 1, 7 → 2). A **solo** (1-guardian) federation is fine for testing but has no fault tolerance.
+A Fedimint federation lets a community pool Bitcoin under **shared custody**: instead of one custodian
+holding everyone's funds, a group of trusted **guardians** jointly control the wallet, and members
+transact privately and instantly in ecash (see the wallet side in `fedimint-bitcoin-wallet`). It's a
+way to give your community a private, scalable Bitcoin bank without any single point of trust or
+failure.
+
+Each guardian runs `fedimintd`. Fedimint is Byzantine-Fault-Tolerant: a federation of `3m + 1`
+guardians tolerates `m` malicious or offline ones (4 guardians → 1, 7 → 2), so no minority of
+guardians can steal funds or halt the federation. A **solo** (1-guardian) federation is fine for
+testing but has no fault tolerance — a real community federation uses several independent guardians.
 
 Bringing a federation to life is a **setup ceremony**: each guardian launches `fedimintd`, sets local
 params, guardians exchange setup codes, then jointly run **Distributed Key Generation (DKG)**. After

@@ -1,26 +1,31 @@
 ---
-name: fedimint-cli-wallet
+name: fedimint-bitcoin-wallet
 description: >-
-  Use when a user wants to use `fedimint-cli` as a wallet to hold and move money
-  through a Fedimint federation — joining a federation from an invite code,
-  checking balance, sending/receiving Chaumian ecash (out-of-band notes),
-  sending/receiving Lightning payments via a gateway, and depositing/withdrawing
-  on-chain Bitcoin. Triggers on: "fedimint-cli", "fedimint wallet", "join
-  federation", "invite code", "ecash", "e-cash", "reissue", "spend notes",
-  "ln-invoice", "ln-pay", "lightning invoice", "deposit address", "peg-in",
-  "peg-out", "withdraw on-chain", "fedimint balance", "fedimint backup".
+  Use when a user wants to hold and send Bitcoin with `fedimint-cli` — a wallet
+  that keeps a Bitcoin balance in a Fedimint federation and can send or receive
+  it three ways: over **Lightning** (instant payments via a gateway),
+  **on-chain** (deposit/withdraw regular Bitcoin), and as **ecash** (private
+  bearer notes handed directly to another person). Covers joining a federation
+  from an invite code, checking your balance, and backing up. Triggers on:
+  "fedimint-cli", "fedimint wallet", "bitcoin wallet", "hold bitcoin", "send
+  bitcoin", "join federation", "invite code", "ecash", "e-cash", "reissue",
+  "spend notes", "ln-invoice", "ln-pay", "lightning invoice", "deposit address",
+  "peg-in", "peg-out", "withdraw on-chain", "fedimint balance", "fedimint backup".
 ---
 
-# fedimint-cli as a wallet
+# A Bitcoin wallet with `fedimint-cli`
 
-`fedimint-cli` is a command-line ecash wallet for a **single client** that talks to a Fedimint
-federation. It holds Chaumian ecash notes and can move value three ways: **ecash** (out-of-band
-notes handed to another person), **Lightning** (via a gateway), and **on-chain Bitcoin** (peg-in /
-peg-out with the federation's wallet).
+`fedimint-cli` lets a single user **hold and send Bitcoin** through a Fedimint federation. Your
+balance is real Bitcoin, held on your behalf by the federation's guardians, and you can move it three
+ways:
 
-**Core mental model:** the client's balance is ecash. Everything else is a conversion — Lightning and
-on-chain are just ways to get value into or out of that ecash balance, brokered by the federation
-(on-chain) or a gateway (Lightning).
+- **Lightning** — send and receive instant Bitcoin payments, brokered by a gateway.
+- **On-chain** — deposit or withdraw ordinary Bitcoin (peg-in / peg-out with the federation's wallet).
+- **Ecash** — hand private bearer notes directly to another person, no third party in the loop.
+
+**Under the hood:** the balance you hold is Chaumian **ecash** — private, bearer Bitcoin tokens issued
+by the federation. Lightning and on-chain are simply ways to convert value into or out of that ecash
+balance. You mostly don't need to think about this; it's why payments are private and instant.
 
 ## Setup
 

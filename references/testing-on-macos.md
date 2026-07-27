@@ -26,7 +26,7 @@ Apple-Silicon, `aarch64-darwin`) is available.
 | Layer | How to test on macOS |
 |-------|----------------------|
 | Substrate (federation + gateway + LN + bitcoind) | `nix develop github:fedimint/fedimint/v0.11.1` then `devimint dev-fed --exec …` **natively** on `aarch64-darwin` (the same harness used on Linux — `devimint`/`fedimint-pkgs`/`gateway-pkgs` build or fetch for darwin). This is the faithful path. |
-| `fedimint-cli-wallet` install | (a) `*-aarch64-apple-darwin` release binary + de-quarantine; (b) `nix profile install --accept-flake-config …#fedimint-cli`; (c) `docker run … fedimint/fedimintd` via Docker Desktop. |
+| `fedimint-bitcoin-wallet` install | (a) `*-aarch64-apple-darwin` release binary + de-quarantine; (b) `nix profile install --accept-flake-config …#fedimint-cli`; (c) `docker run … fedimint/fedimintd` via Docker Desktop. |
 | `fedimint-federation-setup` / `fedimint-gateway-operation` | Run `fedimintd`/`gatewayd` from the darwin release binaries or Nix against a native regtest `bitcoind` (Homebrew `bitcoin` or Nix). docker-compose path via Docker Desktop. |
 | Validation method | Same as Linux: a fresh sub-agent gets only the `SKILL.md` + a task + the running substrate, and drives it via the terminal. No container is needed — macOS *is* the "device". |
 
